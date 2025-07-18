@@ -5,6 +5,8 @@ const prices = {
   "Snacks": 1
 };
 
+const todayKey = `meals_${new Date().toLocaleDateString()}`;
+
 document.getElementById("mealForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const name = document.getElementById("staffName").value.trim();
@@ -19,13 +21,13 @@ document.getElementById("mealForm").addEventListener("submit", function(e) {
 });
 
 function saveMeal(entry) {
-  const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  const meals = JSON.parse(localStorage.getItem(todayKey) || "[]");
   meals.push(entry);
-  localStorage.setItem("meals", JSON.stringify(meals));
+  localStorage.setItem(todayKey, JSON.stringify(meals));
 }
 
 function renderTable() {
-  const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  const meals = JSON.parse(localStorage.getItem(todayKey) || "[]");
   const tbody = document.querySelector("#mealTable tbody");
   tbody.innerHTML = "";
   meals.forEach(entry => {
@@ -38,13 +40,11 @@ function renderTable() {
     `;
     tbody.appendChild(row);
   });
-  renderTotals();
+  renderTotals(meals);
 }
 
-function renderTotals() {
-  const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+function renderTotals(meals) {
   const totals = {};
-
   meals.forEach(entry => {
     if (!totals[entry.name]) {
       totals[entry.name] = 0;
@@ -53,7 +53,7 @@ function renderTotals() {
   });
 
   const summaryDiv = document.getElementById("totals");
-  summaryDiv.innerHTML = "<h3>Total Cost by Staff</h3>";
+  summaryDiv.innerHTML = `<h3>Total Cost for ${new Date().toLocaleDateString()}</h3>`;
   for (const name in totals) {
     const p = document.createElement("p");
     p.textContent = `${name}: $${totals[name].toFixed(2)}`;
@@ -62,7 +62,7 @@ function renderTotals() {
 }
 
 function exportCSV() {
-  const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  const meals = JSON.parse(localStorage.getItem(todayKey) || "[]");
   if (meals.length === 0) {
     alert("No meal data to export.");
     return;
@@ -77,7 +77,7 @@ function exportCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "meal_log.csv";
+  a.download = `meal_log_${entry.date}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
