@@ -1,15 +1,39 @@
-<h3>Meal Tab Summary</h3>
-<table id="mealTable">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Meal</th>
-      <th>Cost</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Meal Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Staff Meal Sign-Up</h2>
+  <form id="mealForm">
+    <input type="text" id="staffName" placeholder="Staff Name" required>
+    <select id="mealType">
+      <option value="Breakfast">Breakfast ($3)</option>
+      <option value="Lunch">Lunch ($5)</option>
+      <option value="Dinner">Dinner ($5)</option>
+      <option value="Snacks">Snacks ($1)</option>
+    </select>
+    <button type="submit">Add Meal</button>
+  </form>
 
-<div id="totals"></div>
-<button onclick="exportCSV()">Export Today’s CSV</button>
+  <h3>Meal Tab Summary</h3>
+  <table id="mealTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Meal</th>
+        <th>Cost</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="totals"></div>
+  <button onclick="exportCSV()">Export to CSV</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
