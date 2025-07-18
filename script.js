@@ -38,10 +38,9 @@ function renderTable() {
     `;
     tbody.appendChild(row);
   });
+  renderTotals();
 }
 
-// Initial render
-renderTable();
 function renderTotals() {
   const meals = JSON.parse(localStorage.getItem("meals") || "[]");
   const totals = {};
@@ -61,9 +60,14 @@ function renderTotals() {
     summaryDiv.appendChild(p);
   }
 }
-renderTable();
+
 function exportCSV() {
   const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  if (meals.length === 0) {
+    alert("No meal data to export.");
+    return;
+  }
+
   let csv = "Name,Meal,Cost,Date\n";
   meals.forEach(entry => {
     csv += `${entry.name},${entry.meal},${entry.cost},${entry.date}\n`;
@@ -74,6 +78,10 @@ function exportCSV() {
   const a = document.createElement("a");
   a.href = url;
   a.download = "meal_log.csv";
+  document.body.appendChild(a);
   a.click();
-renderTable();
+  document.body.removeChild(a);
+}
 
+// Initial render
+renderTable();
