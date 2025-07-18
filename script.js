@@ -75,4 +75,5 @@ function exportCSV() {
   a.href = url;
   a.download = "meal_log.csv";
   a.click();
+renderTable();
 
