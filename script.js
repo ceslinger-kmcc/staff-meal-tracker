@@ -62,3 +62,17 @@ function renderTotals() {
   }
 }
 renderTable();
+function exportCSV() {
+  const meals = JSON.parse(localStorage.getItem("meals") || "[]");
+  let csv = "Name,Meal,Cost,Date\n";
+  meals.forEach(entry => {
+    csv += `${entry.name},${entry.meal},${entry.cost},${entry.date}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "meal_log.csv";
+  a.click();
+
