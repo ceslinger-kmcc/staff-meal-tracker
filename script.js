@@ -61,4 +61,4 @@ function renderTotals() {
     summaryDiv.appendChild(p);
   }
 }
-
+renderTable();
